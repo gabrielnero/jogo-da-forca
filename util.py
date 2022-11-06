@@ -23,11 +23,9 @@ def gerar_palavra_secreta(palavra_chave):
     return palavra_secreta
 
 
-def exibir_jogo(palavra_chave, dica_1, dica_2, dica_3, palavra_secreta, erros):
-    dicas = [dica_1, dica_2, dica_3]
-    contador = 0
+def exibir_jogo(palavra_chave, palavra_secreta, erros):
     os.system("cls")
-    print("A palavra chave possuí {} letras." .format(len(palavra_chave)))
+    print("A palavra chave possui {} letras." .format(len(palavra_chave)))
     exibe_palavra_erros(palavra_secreta, erros)
     print("[1] Receber dica")
     print("[2] Adivinhar letra")
@@ -59,7 +57,7 @@ def comparar_chute(chute, palavra_chave, palavra_secreta, erros):
             print("Você já chutou essa letra!")
             time.sleep(0.15)
             break
-        if palavra_chave[index] == chute:
+        elif palavra_chave[index] == chute:
             palavra_secreta_nova[index] = chute
             acertou = True
         else:
@@ -103,20 +101,14 @@ def erro():
         print(letra)
         time.sleep(0.10)
 
-
-def salva_partida(desafiante, jogador, palavra_chave, vencedor):
-    file = open("resultados.txt", "r")
-    partidas_anteriores = file.readlines()
-    file.close()
-    file = open("resultados.txt", "w")
-    for item in partidas_anteriores:
-        file.write(item)
-    if vencedor == "Desafiante":
-        file.write("Palavra Chave: " + palavra_chave + " - Vencedor: Desafiante" +
-                   desafiante + ", Perdedor: jogador: " + jogador + "\n")
-    else:
-        file.write("Palavra Chave: " + palavra_chave + " - Vencedor: Jogador" +
-                   jogador + ", Perdedor: Desafiante: " + desafiante + "\n")
+def salva_partida(vencedor, nome_desafiante, nome_jogador, palavra_chave):
+    with open ("resultados.txt", "a") as file:
+        if vencedor == "Desafiante":
+            file.write("Palavra Chave: " + palavra_chave + " - Vencedor - Desafiante " +
+                   nome_desafiante + ", Perdedor - jogador " + nome_jogador + "\n")
+        else:
+            file.write("Palavra Chave: " + palavra_chave + " - Vencedor - Jogador " +
+                   nome_jogador + ", Perdedor - Desafiante " + nome_desafiante + "\n")
     file.close()
 
 
